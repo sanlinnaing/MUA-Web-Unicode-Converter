@@ -1,7 +1,6 @@
 {
   "manifest_version": 2,
 
-<<<<<<< HEAD
   "name": "MUA Web Unicode Converter",
   "description": "This extension will check web content and convert to Unicode encoded text automatically if they are Zawgyi.",
   "version": "1.1",
@@ -15,15 +14,6 @@
   "icons": { 
            "48": "icon48.png",
           "128": "icon128.png" },
-=======
-  "name": "MUA Web Unicode Converter *Beta*",
-  "description": "This extension will check web content and convert to Unicode encoded text if they are Zawgyi.",
-  "version": "1.0",
-
-  "browser_action": {
-    "default_icon": "icon.png"
-  },
->>>>>>> 5a84316229de41f06459afb85355c2c45fa72e30
   "content_scripts": [{
         "matches": ["*://*/*"],
         "js":      ["converter.js"],
