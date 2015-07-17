@@ -95,22 +95,38 @@ var converterFun=function(node){
     }
     if (node.nodeType == Node.TEXT_NODE) {
         var text = node.textContent;
+<<<<<<< HEAD
+=======
+        //console.log("_start_"+text+"_end_");
+>>>>>>> 5a84316229de41f06459afb85355c2c45fa72e30
             if (!isMyanmar(text)) {
                 return;
             }
             if (text) {
                 var prNode = node.parentNode;
+<<<<<<< HEAD
                 if(prNode.className&& prNode.className.indexOf('_tt_t_') != -1 && prNode.childNodes && prNode.childNodes.length<1)
                   return; 
                 if (isZawgyi(text)) {
                     text=Z1_Uni(text);
                     node.textContent=text;
+=======
+                if(prNode.className&& prNode.className.indexOf('_tt_t_') != -1)
+                  return; 
+                text = prNode.textContent;
+                if (isZawgyi(text)) {
+                    text=Z1_Uni(text);
+                    prNode.textContent=text;
+>>>>>>> 5a84316229de41f06459afb85355c2c45fa72e30
                 }
                 prNode.className += ' _tt_t_';
                 prNode.style.fontFamily="lucida grande,tahoma,verdana,arial,sans-serif";
               
             }
+<<<<<<< HEAD
 			
+=======
+>>>>>>> 5a84316229de41f06459afb85355c2c45fa72e30
         } else {
             for (var i = 0; i < node.childNodes.length; i++) {
                 var child = node.childNodes[i];
