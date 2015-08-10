@@ -114,7 +114,44 @@ function convertTree(parent) {
 	}
 }
 
-convertTree(document.body);
-document.addEventListener("DOMNodeInserted", function(event) {
-	convertTree(document.body);
-});
+var addObserver = function() {
+	var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+	var list = document.querySelector('body');
+
+	var observer = new MutationObserver(function(mutations) {
+		mutations.forEach(function(mutation) {
+			if (mutation.type == 'childList') {
+				for (var i = 0; i < mutation.addedNodes.length; i++) {
+					var node = mutation.addedNodes[i];
+					if (node.nodeType == Node.TEXT_NODE) {} else {
+						convertTree(node);
+					}
+				}
+			} else if (mutation.type == 'characterData') {
+				convertTree(mutation.target);
+			}
+		});
+	});
+
+	if (list) {
+		observer.observe(list, {
+			childList: true,
+			attributes: false,
+			characterData: true,
+			subtree: true
+		});
+	}
+}
+
+var list = document.querySelector('body');
+if (!list) {
+	if (document.addEventListener) {
+		// Use the handy event callback
+		document.addEventListener("DOMContentLoaded",
+			function() {
+				addObserver();
+			}, false);
+	}
+} else {
+	addObserver();
+}
