@@ -89,6 +89,9 @@ function isZawgyi(input) {
  * http://userscripts-mirror.org/scripts/review/103745
  */
 function convertTree(parent) {
+	if (parent instanceof Node == false) {
+		return;
+	}
 	if (parent.className != null && parent.className.indexOf('_c_o_nvert_') != -1) {
 		//console.log("converted return");
 		return;
@@ -99,16 +102,20 @@ function convertTree(parent) {
 			convertTree(child);
 		} else if (child.nodeType == Node.TEXT_NODE) {
 			var text = child.textContent;
-			if (text) {
-				if (isMyanmar(text) && isZawgyi(text)) {
-					//console.log("text = " + child.textContent);
-					child.textContent = Z1_Uni(text);
-					//console.log(parent.className);
-					if (parent.className == null || parent.className.indexOf('_c_o_nvert_') == -1) {
-						parent.className += ' _c_o_nvert_';
-						parent.style.fontFamily = "lucida grande,tahoma,verdana,arial,sans-serif";
+			if (text && isMyanmar(text)) {
+				text = text.trim();
+				var textSplitted = text.split(" ");
+				var skip = false;
+				textSplitted.forEach(function(eachText) {
+					if (skip == false && isZawgyi(eachText)) {
+						skip = true;
+						child.textContent = Z1_Uni(text);
+						if (parent.className == null || parent.className.indexOf('_c_o_nvert_') == -1) {
+							parent.className += ' _c_o_nvert_';
+							parent.style.fontFamily = "lucida grande,tahoma,verdana,arial,sans-serif";
+						}
 					}
-				}
+				});
 			}
 		}
 	}
@@ -123,7 +130,9 @@ var addObserver = function() {
 			if (mutation.type == 'childList') {
 				for (var i = 0; i < mutation.addedNodes.length; i++) {
 					var node = mutation.addedNodes[i];
-					if (node.nodeType == Node.TEXT_NODE) {} else {
+					if (node.nodeType == Node.TEXT_NODE) {
+                        convertTree(node.parentNode);
+                    } else {
 						convertTree(node);
 					}
 				}
@@ -153,5 +162,6 @@ if (!list) {
 			}, false);
 	}
 } else {
+    convertTree(document.body);
 	addObserver();
 }
