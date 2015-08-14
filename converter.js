@@ -58,8 +58,13 @@ var zawgyiRegex = "\u1031\u103b" // e+medial ra
 	// e + zero + vowel
 	+ "|\u1031?\u1040[\u102b\u105a\u102d-\u1030\u1032\u1036-\u1038]"
 	// e + seven + vowel
-	+ "|\u1031?\u1047[\u102c-\u1030\u1032\u1036-\u1038]";
-
+	+ "|\u1031?\u1047[\u102c-\u1030\u1032\u1036-\u1038]"
+	// cons + asat + cons + virama
+	+ "|[\u1000-\u1021]\u103A[\u1000-\u1021]\u1039"
+	// U | UU | AI + (zawgyi) dot below
+	+ "|[\u102f\u1030\u1032]\u1094"
+	// virama + (zawgyi) medial ra
+	+ "|\u1039[\u107E-\u1084]";
 
 var Zawgyi = new RegExp(zawgyiRegex);
 /* Myanmar text checking regular expression 
