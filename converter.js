@@ -7,7 +7,7 @@
  *   
  */
 
-'use strict';
+ 'use strict';
 
 var zawgyiRegex = "\u1031\u103b" // e+medial ra
 	// beginning e or medial ra
@@ -66,38 +66,49 @@ var zawgyiRegex = "\u1031\u103b" // e+medial ra
 	// virama + (zawgyi) medial ra
 	+ "|\u1039[\u107E-\u1084]";
 
-var Zawgyi = new RegExp(zawgyiRegex);
+	var Zawgyi = new RegExp(zawgyiRegex);
 /* Myanmar text checking regular expression 
  *  is the part of Myanmar Font Tagger
  * http://userscripts-mirror.org/scripts/review/103745 
  */
-var Myanmar = new RegExp("[\u1000-\u1021\u1040\u1044\u1047]");
+ var Myanmar = new RegExp("[\u1000-\u1021]");
 
-function isMyanmar(input) {
-	if (Myanmar.test(input)) {
-		return true;
-	}
-	return false;
-}
+ function isMyanmar(input) {
+ 	if (Myanmar.test(input)) {
+ 		return true;
+ 	}
+ 	return false;
+ }
 
-function isZawgyi(input) {
+ /*
+ * This method will check and search Zawgyi Pattern with input text and 
+ * return true, if the text is Zawgyi encoding.
+ * Parm = input text
+ * return = boolean 
+ *
+ */
 
-	if (Zawgyi.test(input)) {
-		return true;
-	} else {
-		return false;
-	}
-}
+ function isZawgyi(input) {
+ 	input = input.trim();
+ 	//console.log(input);
+ 	var textSplitted = input.split(" ");
+ 	for(var j=0;j<textSplitted.length;j++) {
+ 	//	console.log(textSplitted[j]);
+ 		if (Zawgyi.test(textSplitted[j])) 
+ 			return true;
+ 	}
+ 	return false;
+ }
 
 /*
  * This part are from Myanmar Font Tagger scripts developed by Ko Thant Thet Khin Zaw
  * http://userscripts-mirror.org/scripts/review/103745
  */
-function convertTree(parent) {
-	if (parent instanceof Node == false) {
-		return;
-	}
-	if (parent.className != null && parent.className.indexOf('_c_o_nvert_') != -1) {
+ function convertTree(parent) {
+ 	if (parent instanceof Node == false) {
+ 		return;
+ 	}
+ 	if (parent.className != null && parent.className.indexOf('_c_o_nvert_') != -1) {
 		//console.log("converted return");
 		return;
 	}
@@ -108,19 +119,16 @@ function convertTree(parent) {
 		} else if (child.nodeType == Node.TEXT_NODE) {
 			var text = child.textContent;
 			if (text && isMyanmar(text)) {
-				text = text.trim();
-				var textSplitted = text.split(" ");
-				var skip = false;
-				textSplitted.forEach(function(eachText) {
-					if (skip == false && isZawgyi(eachText)) {
-						skip = true;
-						child.textContent = Z1_Uni(text);
-						if (parent.className == null || parent.className.indexOf('_c_o_nvert_') == -1) {
-							parent.className += ' _c_o_nvert_';
-							parent.style.fontFamily = "lucida grande,tahoma,verdana,arial,sans-serif";
-						}
+				//console.log(text);
+				if (isZawgyi(text)) {
+					child.textContent = Z1_Uni(text);
+					if (parent.className == null || parent.className.indexOf('_c_o_nvert_') == -1) {
+						parent.className += ' _c_o_nvert_';
+						parent.style.fontFamily = "lucida grande,tahoma,verdana,arial,sans-serif";
 					}
-				});
+				}
+				
+
 			}
 		}
 	}
@@ -136,8 +144,8 @@ var addObserver = function() {
 				for (var i = 0; i < mutation.addedNodes.length; i++) {
 					var node = mutation.addedNodes[i];
 					if (node.nodeType == Node.TEXT_NODE) {
-                        convertTree(node.parentNode);
-                    } else {
+						convertTree(node.parentNode);
+					} else {
 						convertTree(node);
 					}
 				}
@@ -167,6 +175,6 @@ if (!list) {
 			}, false);
 	}
 } else {
-    convertTree(document.body);
+	convertTree(document.body);
 	addObserver();
 }
