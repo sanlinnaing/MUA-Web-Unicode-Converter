@@ -100,6 +100,18 @@ var zawgyiRegex = "\u1031\u103b" // e+medial ra
  	return false;
  }
 
+ /*
+ */
+
+ function shouldIgnoreNode(node) {
+ 	if (node.nodeName == "INPUT") {
+ 		return true;
+ 	} else if (node.isContentEditable == true) {
+ 		return true;
+ 	}
+ 	return false;
+ }
+
 /*
  * This part are from Myanmar Font Tagger scripts developed by Ko Thant Thet Khin Zaw
  * http://userscripts-mirror.org/scripts/review/103745
@@ -120,7 +132,7 @@ var zawgyiRegex = "\u1031\u103b" // e+medial ra
 			var text = child.textContent;
 			if (text && isMyanmar(text)) {
 				//console.log(text);
-				if (isZawgyi(text)) {
+				if (shouldIgnoreNode(parent) == false && isZawgyi(text)) {
 					child.textContent = Z1_Uni(text);
 					if (parent.className == null || parent.className.indexOf('_c_o_nvert_') == -1) {
 						parent.className += ' _c_o_nvert_';
