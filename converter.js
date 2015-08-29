@@ -177,6 +177,10 @@ var addObserver = function() {
 	}
 }
 
+var title=document.title;
+if(isMyanmar(title)&&isZawgyi(title)){
+	document.title=Z1_Uni(title);
+}
 var list = document.querySelector('body');
 if (!list) {
 	if (document.addEventListener) {
