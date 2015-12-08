@@ -104,7 +104,7 @@ var zawgyiRegex = "\u1031\u103b" // e+medial ra
  */
 
  function shouldIgnoreNode(node) {
- 	if (node.nodeName == "INPUT" || node.nodeName == "SCRIPT") {
+ 	if (node.nodeName == "INPUT" || node.nodeName == "SCRIPT" || node.nodeName == "TEXTAREA") {
  		return true;
  	} else if (node.isContentEditable == true) {
  		return true;
