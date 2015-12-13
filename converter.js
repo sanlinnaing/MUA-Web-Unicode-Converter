@@ -39,8 +39,8 @@ var zawgyiRegex = "\u1031\u103b" // e+medial ra
 	+ "|[\u1090-\u1099][\u102b-\u1030\u1032\u1037\u103c-\u103e]"
 	// consonant + medial ya + dependent vowel tone asat
 	+ "|[\u1000-\u102a]\u103a[\u102c-\u102e\u1032-\u1036]"
-	// independent vowel dependent vowel tone medial digit + e
-	+ "|[\u1023-\u1030\u1032-\u103a\u1040-\u104f]\u1031"
+	// independent vowel dependent vowel tone digit + e [ FIXED !!! - not include medial ]
+	+ "|[\u1023-\u1030\u1032-\u1039\u1040-\u104f]\u1031"
 	// other shapes of medial ra + consonant not in Shan consonant
 	+ "|[\u107e-\u1084][\u1001\u1003\u1005-\u100f\u1012-\u1014\u1016-\u1018\u101f]"
 	// u + asat
@@ -55,12 +55,14 @@ var zawgyiRegex = "\u1031\u103b" // e+medial ra
 	+ "|\u102c\u1039"
 	// ya + medial wa
 	+ "|\u101b\u103c"
+	// non digit + zero + \u102d (i vowel) [FIXED!!! rules tested zero + i vowel in numeric usage]
+	+ "|[^\u1040-\u1049]\u1040\u102d"
 	// e + zero + vowel
-	+ "|\u1031?\u1040[\u102b\u105a\u102d-\u1030\u1032\u1036-\u1038]"
+	+ "|\u1031?\u1040[\u102b\u105a\u102e-\u1030\u1032\u1036-\u1038]"
 	// e + seven + vowel
 	+ "|\u1031?\u1047[\u102c-\u1030\u1032\u1036-\u1038]"
 	// cons + asat + cons + virama
-	+ "|[\u1000-\u1021]\u103A[\u1000-\u1021]\u1039"
+	//+ "|[\u1000-\u1021]\u103A[\u1000-\u1021]\u1039" [ FIXED!!! REMOVED!!! conflict with Mon's Medial ]
 	// U | UU | AI + (zawgyi) dot below
 	+ "|[\u102f\u1030\u1032]\u1094"
 	// virama + (zawgyi) medial ra
@@ -91,11 +93,16 @@ var zawgyiRegex = "\u1031\u103b" // e+medial ra
  function isZawgyi(input) {
  	input = input.trim();
  	//console.log(input);
- 	var textSplitted = input.split(" ");
- 	for(var j=0;j<textSplitted.length;j++) {
- 	//	console.log(textSplitted[j]);
- 		if (Zawgyi.test(textSplitted[j])) 
- 			return true;
+ 	var textSplittedByLine = input.split(/[\f\n\r\t\v\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]/);
+ 	for (var i=0;i<textSplittedByLine.length;i++){
+ 		var textSplitted = textSplittedByLine[i].split(" ");
+ 		for(var j=0;j<textSplitted.length;j++) {
+ 			//	console.log(textSplitted[j]);
+ 			if(j!=0)
+ 				textSplitted[j]=" "+textSplitted[j];
+ 			if (Zawgyi.test(textSplitted[j]))
+ 				return true;
+ 		}
  	}
  	return false;
  }
@@ -134,7 +141,7 @@ var zawgyiRegex = "\u1031\u103b" // e+medial ra
 				//console.log(text);
 				if (shouldIgnoreNode(parent) == false && isZawgyi(text)) {
 					child.textContent = Z1_Uni(text);
-					if (parent.className == null || parent.className.indexOf('_c_o_nvert_') == -1) {
+					if (parent.className == null || (parent.className.indexOf('_c_o_nvert_') == -1 && parent.className.indexOf('text_exposed_show') == -1)) {
 						parent.className += ' _c_o_nvert_';
 						parent.style.fontFamily = "lucida grande,tahoma,verdana,arial,sans-serif";
 					}
