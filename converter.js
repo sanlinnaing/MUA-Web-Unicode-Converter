@@ -34,7 +34,7 @@ var zawgyiRegex = "\u1031\u103b" // e+medial ra
 	// U UU + U UU
 	+ "|[\u102f\u1030][\u102f\u1030]"
 	// tall aa short aa
-	+ "|[\u102b\u102c][\u102b\u102c]"
+	//+ "|[\u102b\u102c][\u102b\u102c]" [ FIXED!! It is not so valuable zawgyi pattern ]
 	// shan digit + vowel
 	+ "|[\u1090-\u1099][\u102b-\u1030\u1032\u1037\u103c-\u103e]"
 	// consonant + medial ya + dependent vowel tone asat
