@@ -32,7 +32,7 @@ var zawgyiRegex = "\u1031\u103b" // e+medial ra
 	// I II , II I, I I, II II
 	//+ "|[\u102d\u102e][\u102d\u102e]"
 	// U UU + U UU
-	+ "|[\u102f\u1030][\u102f\u1030]"
+	//+ "|[\u102f\u1030][\u102f\u1030]" [ FIXED!! It is not so valuable zawgyi pattern ]
 	// tall aa short aa
 	//+ "|[\u102b\u102c][\u102b\u102c]" [ FIXED!! It is not so valuable zawgyi pattern ]
 	// shan digit + vowel
