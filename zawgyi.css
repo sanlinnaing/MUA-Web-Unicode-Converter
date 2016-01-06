@@ -1,4 +1,19 @@
-._c_o_nvert_{
-	padding-left: 0.5em;
-	border-left: 2px solid #FD1100;
+.i_am_zawgyi {
+    padding-left: 0.5em;
+    border-left: 2px solid #FD1100;
+}
+
+.i_have_zawgyi {
+    position: fixed;
+    height:4em;
+    top: 4px;
+    z-index: 99999;
+    visibility:visible;
+}
+
+.mua_noti_text {
+	color:black;
+	text-shadow:1px 1px 5px red;
+	font-size:120%;
+	font-family : "lucida grande",tahoma,verdana,arial,sans-serif !important;
 }
