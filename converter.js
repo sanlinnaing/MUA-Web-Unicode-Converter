@@ -143,7 +143,7 @@ var zawgyiRegex = "\u1031\u103b" // e+medial ra
 					child.textContent = Z1_Uni(text);
 					if (parent.className == null || (parent.className.indexOf('_c_o_nvert_') == -1 && parent.className.indexOf('text_exposed_show') == -1)) {
 						parent.className += ' _c_o_nvert_';
-						parent.style.fontFamily = "lucida grande,tahoma,verdana,arial,sans-serif";
+						parent.style.setProperty("font-family", "lucida grande,tahoma,verdana,arial,sans-serif", "important");
 					}
 				}
 				
