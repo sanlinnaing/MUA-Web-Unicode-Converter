@@ -171,6 +171,7 @@ function Z1_Uni(input) {
 	output = output.replace(/\u1044\u1004\u103A\u1038/g, "\u104E\u1004\u103A\u1038");
 	output = output.replace(/\u1014\u102F\u103A\u1015\u103A/g, "\u1014\u103A\u102F\u1015\u103A");// rule for kyawa-note (me)
 	output = output.replace(/\u102F\u1036\u102F/g, "\u102F\u1036");
+	output = output.replace(/\u103A\u103A/g, "\u103A");
 	
 	// MUA Web Unicode Converter's work
 	//user typo error
