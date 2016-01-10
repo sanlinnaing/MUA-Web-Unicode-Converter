@@ -3,17 +3,29 @@
     border-left: 2px solid #FD1100;
 }
 
-.i_have_zawgyi {
+#zawgyi_noti {
     position: fixed;
-    height:4em;
-    top: 4px;
-    z-index: 99999;
-    visibility:visible;
+    height: 100px;
+    width: 100px;
+    top: 100px;
+    right: 4px;
+    z-index: 999999;
+    visibility: visible;
+    border: 2px solid #FD1100;
+    padding: 4px;
+    border-radius: 10px;
+    background-color: rgba(102, 51, 153, 0.74);
 }
 
-.mua_noti_text {
-	color:black;
-	text-shadow:1px 1px 5px red;
-	font-size:120%;
-	font-family : "lucida grande",tahoma,verdana,arial,sans-serif !important;
+#mua_noti_off {
+    width: 20px;
+    height: 20px;
+    position: fixed;
+    top:110px;
+    right:10px;
+}
+
+.mua_image {
+    width: 100px;
+    height: 100px;
 }
