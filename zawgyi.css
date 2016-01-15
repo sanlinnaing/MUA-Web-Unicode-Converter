@@ -1,4 +1,5 @@
-.i_am_zawgyi {
+.i_am_zawgyi:hover {
+    display: inline-block;
     padding-left: 0.5em;
     border-left: 2px solid #FD1100;
 }
