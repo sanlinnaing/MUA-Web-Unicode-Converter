@@ -1,6 +1,5 @@
-.i_am_zawgyi {
-    padding-left: 0.5em;
-    border-left: 2px solid #FD1100;
+.i_am_zawgyi:hover {
+    border-right: 2px solid #FD1100;
 }
 
 #zawgyi_noti {
