@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head lang="my">
+    <meta charset="UTF-8">
+    <title>MUA Web Unicode Converter</title>
+    <script src="popup.js"></script>
+    <style type="text/css">
+      .onoffswitch {
+          position: relative; width: 90px;
+          -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+      }
+      .onoffswitch-checkbox {
+          display: none;
+      }
+      .onoffswitch-label {
+          display: block; overflow: hidden; cursor: pointer;
+          border: 2px solid #999999; border-radius: 20px;
+      }
+      .onoffswitch-inner {
+          display: block; width: 200%; margin-left: -100%;
+          transition: margin 0.3s ease-in 0s;
+      }
+      .onoffswitch-inner:before, .onoffswitch-inner:after {
+          display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+          font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+          box-sizing: border-box;
+      }
+      .onoffswitch-inner:before {
+          content: "ON";
+          padding-left: 10px;
+          background-color: #34A7C1; color: #FFFFFF;
+      }
+      .onoffswitch-inner:after {
+          content: "OFF";
+          padding-right: 10px;
+          background-color: #EEEEEE; color: #999999;
+          text-align: right;
+      }
+      .onoffswitch-switch {
+          display: block; width: 18px; margin: 6px;
+          background: #FFFFFF;
+          position: absolute; top: 0; bottom: 0;
+          right: 56px;
+          border: 2px solid #999999; border-radius: 20px;
+          transition: all 0.3s ease-in 0s; 
+      }
+      .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+          margin-left: 0;
+      }
+      .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+          right: 0px; 
+      }
+
+
+body {
+  width: 350px;
+  margin: 0 auto;
+  padding: 5px 20px 13px 20px;
+  border-radius: 10px;
+  background: #fff;
+  background: -moz-linear-gradient(#fff, #999);
+  background: -webkit-linear-gradient(#fff, #999);
+  background: -o-linear-gradient(#fff, #999);
+}
+    </style>
+  </head>
+  <body>
+<P style="text-align: right;"> 
+<button id="close" style="width:60px; hight:60px; background: transparent; border: 0; text-align: right;">X</button>
+</P>
+    <h2>MUA Web Unicode Converter</h2>
+    <div class="onoffswitch">
+      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="muaonoffswitch" checked>
+      <label class="onoffswitch-label" for="muaonoffswitch">
+          <span class="onoffswitch-inner"></span>
+          <span class="onoffswitch-switch"></span>
+      </label>
+    </div>
+    <p>This extension will check web content and convert to Unicode encoded text if they are Zawgyi. </p>
+    <p>
+        ဒီဂျစ်တယ်ခေတ်တွင် နိုင်ငံတကာသုံးစံနှုန်းများကို သုံးစွဲခြင်းဖြင့် ဘာသာစကားများကို ထိန်းသိမ်းကာကွယ်ပါ။
+    </p>
+    <p>
+      PowerBY: <b>Myanmar Unicode Area</b> | <a href="http://facebook.com/groups/mmUnicode" target="blank_"> fb.com/groups/mmUnicode</a>
+    </p>
+
+  </body>
+</html>
