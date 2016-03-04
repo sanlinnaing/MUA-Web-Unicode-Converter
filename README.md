@@ -7,6 +7,7 @@ Because of Parabaik Converter, this repo will be under GPL.
 This tools is also contributed by 
 - <a href="https://github.com/thantthet">Ko Thant Thet Khin Zaw</a>.
 - <a href="https://github.com/AungMyoKyaw">Ko Aung Myo Kyaw</a>
+- <a href="https://github.com/thixpin">thixpin</a>
 - And me :laughing:
 
 Thanks all.
