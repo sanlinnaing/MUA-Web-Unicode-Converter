@@ -3,6 +3,10 @@
 
   "name": "MUA Web Unicode Converter",
   "description": "This extension will check web content and convert to Unicode encoded text if they are Zawgyi.",
+     "icons": {
+      "128": "icon128.png",
+      "48": "icon48.png"
+   },
   "version": "1.14",
 
   "background" : {
