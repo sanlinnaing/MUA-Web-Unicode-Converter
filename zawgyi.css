@@ -1,0 +1,31 @@
+.i_am_zawgyi {
+    padding-left: 0.5em;
+    border-left: 2px solid #FD1100;
+}
+
+#zawgyi_noti {
+    position: fixed;
+    height: 100px;
+    width: 100px;
+    top: 100px;
+    right: 4px;
+    z-index: 999999;
+    visibility: visible;
+    border: 2px solid #FD1100;
+    padding: 4px;
+    border-radius: 10px;
+    background-color: rgba(102, 51, 153, 0.74);
+}
+
+#mua_noti_off {
+    width: 20px;
+    height: 20px;
+    position: fixed;
+    top:110px;
+    right:10px;
+}
+
+.mua_image {
+    width: 100px;
+    height: 100px;
+}
