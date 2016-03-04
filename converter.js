@@ -224,7 +224,15 @@ if (!list) {
         // Use the handy event callback
         document.addEventListener("DOMContentLoaded",
             function() {
-                addObserver();
+                chrome.storage.sync.get("data", function(items) {
+                    if (!chrome.runtime.error) {
+                      //console.log(items);
+                      var enableMUA = items.data;
+                      if(enableMUA != "disable") {
+                        addObserver();
+                      }
+                    } 
+                });
             }, false);
     }
 } else {
@@ -234,8 +242,9 @@ if (!list) {
           var enableMUA = items.data;
           if(enableMUA != "disable") {
             convertTree(document.body);
+            addObserver();
           }
         } 
     });
-    addObserver();
+    
 }
