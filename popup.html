@@ -4,7 +4,25 @@
     <meta charset="UTF-8">
     <title>MUA Web Unicode Converter</title>
     <script src="popup.js"></script>
+    <script src="canvas2image.js"></script>
     <style type="text/css">
+      .doc {
+        width: 604px;
+        margin: 0 auto;
+      }
+      canvas {
+          display: block;
+          border: 2px solid #888;
+          border-radius: 10px;
+          display: none;
+        }
+      .btn {
+          padding: 10px auto;
+          height: 30px;
+          margin: 10px 10px 10px 230px;
+          background-color: #34A7C1; color: #FFFFFF;
+          border: 2px solid #999999; border-radius: 10px;
+      }
       .onoffswitch {
           position: relative; width: 90px;
           -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
@@ -50,7 +68,7 @@
       .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
           right: 0px; 
       }
-
+textarea { font-size: 12px;  width: 335px; height: 150px; padding:7px;}
 
 body {
   width: 350px;
@@ -77,12 +95,19 @@ body {
       </label>
     </div>
     <p>This extension will check web content and convert to Unicode encoded text if they are Zawgyi. </p>
-    <p>
-        ဒီဂျစ်တယ်ခေတ်တွင် နိုင်ငံတကာသုံးစံနှုန်းများကို သုံးစွဲခြင်းဖြင့် ဘာသာစကားများကို ထိန်းသိမ်းကာကွယ်ပါ။
-    </p>
+    <div class="doc">
+        <textarea id="myTextarea" style="width:320px; height:70px; border: 1px solid #037; border-radius: 10px;"  >ဒီဂျစ်တယ်ခေတ်တွင် နိုင်ငံတကာသုံးစံနှုန်းများကို သုံးစွဲခြင်းဖြင့် ဘာသာစကားများကို ထိန်းသိမ်းကာကွယ်ပါ။</textarea>
+        <br>
+        <button id="fillText" class="btn">Text to image</button>
+        <br>
+        <canvas width="330" height="70" id="cvs"></canvas>
+        
+    </div>
+    <div id="imgs">
+        
+    </div>
     <p>
       PowerBY: <b>Myanmar Unicode Area</b> | <a href="http://facebook.com/groups/mmUnicode" target="blank_"> fb.com/groups/mmUnicode</a>
     </p>
-
   </body>
 </html>
