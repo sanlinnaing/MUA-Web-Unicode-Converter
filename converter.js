@@ -124,7 +124,7 @@ function shouldIgnoreNode(node) {
  * http://userscripts-mirror.org/scripts/review/103745
  */
 function convertTree(parent) {
-    if (parent instanceof Node == false) {
+    if (parent instanceof Node == false || parent instanceof SVGElement) {
         return;
     }
     if (parent.className != null && parent.className.indexOf('_c_o_nvert_') != -1) {
