@@ -227,7 +227,6 @@ function addNoti() {
                     if (op <= 0.01){
                         clearInterval(timer);
                         element.style.display = 'none';
-                        document.body.removeChild(element);
                     }
                     setOpacity(element, op);
                     op -= op * 0.1;
