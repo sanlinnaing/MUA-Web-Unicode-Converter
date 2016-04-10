@@ -1,6 +1,7 @@
 /**
  * covert canvas to image
  * and save the image file
+ * SourceCode_URL:  https://github.com/hongru/canvas2image
  */
 
 var Canvas2Image = function () {
