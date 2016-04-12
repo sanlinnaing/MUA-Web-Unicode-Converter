@@ -120,7 +120,11 @@ function switchNow() {
 */
         
         $fillText.onclick = function (e) {
-            var text = document.getElementById('myTextarea').value;
+          if (document.getElementById('myTextarea').value=="") {
+                        var text = "ဒီဂျစ်တယ်ခေတ်တွင် နိုင်ငံတကာသုံးစံနှုန်းများကို သုံးစွဲခြင်းဖြင့် ဘာသာစကားများကို ထိန်းသိမ်းကာကွယ်ပါ။";
+          } else {
+                        var text = document.getElementById('myTextarea').value;
+          };
             ctx.font = '13pt Myanmar3';
             canvas.height = wrapText(ctx, text, x, y, maxWidth, lineHeight);
             ctx.fillStyle = '#ffffff';
