@@ -118,9 +118,38 @@ function switchNow() {
             }
         };
 */
-        
+        function copyimg(){
+          var copynow=new Clipboard('.btn');
+          copynow.on('success',function(e){
+            e.clearSelection();
+            var message=document.getElementById('message');
+            message.innerHTML="အောင်မြင်စွာကော်ပီကူးပြီးဖြစ်၍ နှစ်သက်ရာနေရာတွင် paste ချ၍အသုံးပြုနိုင်ပါသည်။";
+            function amk(){
+              setTimeout(function(){
+                message.innerHTML="";
+              },3000);
+            }
+            amk();
+            clearTimeout(amk());
+          });
+        }
+        var text=document.getElementById('myTextarea');
+        chrome.storage.sync.get("textboxval_mua",function(a){
+            if(a.textboxval_mua!==undefined){
+              text.value=a.textboxval_mua;
+            }
+        });
+        text.onkeypress=function(e){
+          //console.log(text.value);
+          console.log(e.which);
+          chrome.storage.sync.set({"textboxval_mua":text.value+String.fromCharCode(e.which)});
+        };
         $fillText.onclick = function (e) {
+          if (document.getElementById('myTextarea').value=="") {
+            var text = "ဒီဂျစ်တယ်ခေတ်တွင် နိုင်ငံတကာသုံးစံနှုန်းများကို သုံးစွဲခြင်းဖြင့် ဘာသာစကားများကို ထိန်းသိမ်းကာကွယ်ပါ။";
+          } else {
             var text = document.getElementById('myTextarea').value;
+          };
             ctx.font = '13pt Myanmar3';
             canvas.height = wrapText(ctx, text, x, y, maxWidth, lineHeight);
             ctx.fillStyle = '#ffffff';
@@ -130,10 +159,10 @@ function switchNow() {
             //ctx.fillText(document.getElementById('myTextarea').value, 100, 120);
             imageObj.src = 'mua.png';
             wrapText(ctx, text, x, y, maxWidth, lineHeight);
-
             $imgs.innerHTML = "";
             $imgs.appendChild(Canvas2Image.convertToImage(canvas, canvas.width, canvas.height, "png"));
-
+            copyimg();
+            chrome.storage.sync.set({"textboxval_mua":""});
         }
 
     }
