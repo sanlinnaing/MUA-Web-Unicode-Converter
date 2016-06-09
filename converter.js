@@ -145,7 +145,8 @@ function convertTree(parent) {
                         parent.className += ' _c_o_nvert_';
                         parent.style.setProperty("font-family", "lucida grande,tahoma,verdana,arial,sans-serif", "important");
                         if (font_verification_enable) {
-                            parent.className += " i_am_zawgyi";
+                            var parentElement = findParent(parent);
+                            parentElement.className += " i_am_zawgyi";
                         } else {
                             addNoti();
                         }
@@ -157,7 +158,14 @@ function convertTree(parent) {
         }
     }
 }
-
+function findParent(element){
+    var parentElement = element.parentNode;
+    var hasOneChild = false;
+    while(hasOneChild === false){
+        parentElement.childNodes.length > 1 ? parentElement = parentElement.parentNode : hasOneChild = true;
+    }
+    return parentElement;
+}
 var addObserver = function() {
     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
     var list = document.querySelector('body');
