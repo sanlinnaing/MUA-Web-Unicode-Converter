@@ -5,7 +5,6 @@
     <title>MUA Web Unicode Converter</title>
     <script src="popup.js"></script>
     <script src="canvas2image.js"></script>
-    <script src="clipboard.min.js"></script>
     <style type="text/css">
       .doc {
         width: 604px;
@@ -105,12 +104,11 @@ body {
     <div class="doc">
         <textarea id="myTextarea" placeholder="ဒီဂျစ်တယ်ခေတ်တွင် နိုင်ငံတကာသုံးစံနှုန်းများကို သုံးစွဲခြင်းဖြင့် ဘာသာစကားများကို ထိန်းသိမ်းကာကွယ်ပါ။" style="width:320px; height:70px; border: 1px solid #037; border-radius: 10px;" ></textarea>
         <br>
-        <button id="fillText" class="btn" data-clipboard-target="#imgs">Text to image</button>
+        <button id="fillText" class="btn">Text to image</button>
         <br>
         <canvas width="330" height="70" id="cvs"></canvas>
         
     </div>
-    <p id="message"></p>
     <div id="imgs">
         
     </div>
