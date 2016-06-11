@@ -127,7 +127,7 @@ function convertTree(parent) {
     if (parent instanceof Node == false || parent instanceof SVGElement) {
         return;
     }
-    if (parent.className != null && parent.classList.contains('_c_o_nvert_') == false) {
+    if (parent.className != null && parent.classList.contains('_c_o_nvert_') == true) {
         //console.log("converted return");
         return;
     }
