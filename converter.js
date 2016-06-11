@@ -127,7 +127,7 @@ function convertTree(parent) {
     if (parent instanceof Node == false || parent instanceof SVGElement) {
         return;
     }
-    if (parent.className != null && parent.className.indexOf('_c_o_nvert_') != -1) {
+    if (parent.className != null && parent.classList.contains('_c_o_nvert_') == false) {
         //console.log("converted return");
         return;
     }
@@ -141,12 +141,12 @@ function convertTree(parent) {
                 //console.log(text);
                 if (shouldIgnoreNode(parent) == false && isZawgyi(text)) {
                     child.textContent = Z1_Uni(text);
-                    if (parent.className == null || (parent.className.indexOf('_c_o_nvert_') == -1 && parent.className.indexOf('text_exposed_show') == -1)) {
-                        parent.className += ' _c_o_nvert_';
+                    if (parent.className == null || (parent.classList.contains('_c_o_nvert_') == false && parent.classList.contains('text_exposed_show') == false)) {
+                        parent.classList.add('_c_o_nvert_');
                         parent.style.setProperty("font-family", "lucida grande,tahoma,verdana,arial,sans-serif", "important");
                         if (font_verification_enable) {
                             var parentElement = findParent(parent);
-                            parentElement.className += " i_am_zawgyi";
+                            parentElement.classList.add("i_am_zawgyi");
                         } else {
                             addNoti();
                         }
