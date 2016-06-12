@@ -160,9 +160,17 @@ function convertTree(parent) {
 }
 function findParent(element){
     var parentElement = element.parentNode;
-    var hasOneChild = false;
-    while(hasOneChild === false){
-        parentElement.childNodes.length > 1 ? parentElement = parentElement.parentNode : hasOneChild = true;
+    var end = false;
+    while(end === false){
+        if(parentElement.childNodes.length > 1) {
+            if(parentElement.lastChild.nodeName == 'DIV'){
+                end = true ;
+            } else {
+                parentElement = parentElement.parentNode; 
+            }            
+        } else {
+            end = true;
+        }
     }
     return parentElement;
 }

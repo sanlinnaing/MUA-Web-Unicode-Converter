@@ -1,7 +1,23 @@
-.i_am_zawgyi:hover {
-    border-right: 2px solid #FD1100;
+@keyframes changecolorhover {
+    from {
+        border-left: 3px solid rgba(247, 247, 247 , 1);
+    }
+    to {
+        border-left: 3px solid rgba(253, 17, 0 , 1);
+    }
 }
 
+.i_am_zawgyi:hover {
+    animation-name: changecolorhover;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+.i_am_zawgyi {
+    border-left: 3px solid rgba(247, 247, 247 , 1);
+    padding-left: .6em;
+}
 /* CSS copied from https://github.com/CodeSeven/toastr */
 
 #mua-conversion-warning-container {
