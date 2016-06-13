@@ -29,8 +29,5 @@
    } ],
   "permissions": [
     "activeTab", "storage"
-  ],
-  "web_accessible_resources": [
-       "icon19.png"
-     ]
+  ]
 }

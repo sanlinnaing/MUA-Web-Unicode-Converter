@@ -146,7 +146,9 @@ function convertTree(parent) {
                         parent.style.setProperty("font-family", "lucida grande,tahoma,verdana,arial,sans-serif", "important");
                         if (font_verification_enable) {
                             var parentElement = findParent(parent);
-                            parentElement.classList.add("i_am_zawgyi");
+                            if(isDuplicated(parentElement)===false){
+                                parentElement.classList.add("i_am_zawgyi");
+                            }
                         } else {
                             addNoti();
                         }
@@ -172,7 +174,16 @@ function findParent(element){
             end = true;
         }
     }
+    if(parentElement.nodeName == 'SPAN'){
+        parentElement.style.display = 'block';
+    } else if(parentElement.nodeName == 'A'){
+        parentElement.style.display = 'inline-block';
+    }
     return parentElement;
+}
+function isDuplicated(element){
+    var parent = findParent(element);
+    return parent.className.indexOf('i_am_zawgyi')!==-1 ? true : false ;
 }
 var addObserver = function() {
     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
