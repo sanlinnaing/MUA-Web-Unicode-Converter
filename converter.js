@@ -270,7 +270,7 @@ if (isMyanmar(title) && isZawgyi(title)) {
     document.title = Z1_Uni(title);
 }
 
-if (document.location.hostname.indexOf("facebook") != -1) {
+if (document.location.hostname.indexOf("facebook") != -1 || document.location.hostname=='plus.google.com') {
     font_verification_enable = true;
     //console.log("It is facebook");
 }
