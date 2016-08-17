@@ -36,6 +36,8 @@ function Z1_Uni(input) {
 	var ha = "\u103E";
 	var zero = "\u1040";
 
+	//remove replacement char from bagan keyboard
+	output = output.replace(/\uFFFD/g, '');
 	output = output.replace(/\u106A/g, " \u1009");
 	output = output.replace(/\u1025(?=[\u1039\u102C])/g, "\u1009"); //new
 	output = output.replace(/\u1025\u102E/g, "\u1026"); //new
