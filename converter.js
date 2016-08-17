@@ -136,7 +136,7 @@ function convertTree(parent) {
         if (child.nodeType != Node.TEXT_NODE && child.hasChildNodes()) {
             convertTree(child);
         } else if (child.nodeType == Node.TEXT_NODE) {
-            var text = child.textContent;
+            var text = child.textContent.replace(/[\u200b\uFFFD]/g, "");
             if (text && isMyanmar(text)) {
                 //console.log(text);
                 if (shouldIgnoreNode(parent) == false && isZawgyi(text)) {
