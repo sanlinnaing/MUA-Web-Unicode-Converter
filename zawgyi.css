@@ -4,14 +4,14 @@
     }
 }
 
-.i_am_zawgyi:hover {
+.i_am_zawgyi:hover,.i_am_uni:hover {
     animation-name: changecolorhover;
     animation-duration: 1s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
-.i_am_zawgyi {
+.i_am_zawgyi,.i_am_uni {
     border-left: 4px solid #DDDFE2;
     padding-left: .6em;
 }

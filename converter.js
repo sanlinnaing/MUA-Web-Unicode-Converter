@@ -107,8 +107,15 @@ function isZawgyi(input) {
     return false;
 }
 
-/*
- */
+var convToUni = true;
+chrome.storage.sync.get('unicode',function(item){
+    console.log('convToUni',item.unicode);
+    if(item.unicode===false){
+        convToUni = false;
+    } else {
+        convToUni = true;
+    }
+});
 
 function shouldIgnoreNode(node) {
     if (node.nodeName == "INPUT" || node.nodeName == "SCRIPT" || node.nodeName == "TEXTAREA") {
@@ -139,7 +146,7 @@ function convertTree(parent) {
             var text = child.textContent.replace(/[\u200b\uFFFD]/g, "");
             if (text && isMyanmar(text)) {
                 //console.log(text);
-                if (shouldIgnoreNode(parent) == false && isZawgyi(text)) {
+                if (shouldIgnoreNode(parent) == false && isZawgyi(text) && convToUni) {
                     child.textContent = Z1_Uni(text);
                     if (parent.className == null || (parent.classList.contains('_c_o_nvert_') == false && parent.classList.contains('text_exposed_show') == false)) {
                         parent.classList.add('_c_o_nvert_');
@@ -154,8 +161,21 @@ function convertTree(parent) {
                         }
                     }
                 }
-
-
+                if (shouldIgnoreNode(parent) == false && isZawgyi(text)===false && convToUni===false) {
+                    child.textContent = Uni_Z1(text);
+                    if (parent.className == null || (parent.classList.contains('_c_o_nvert_') == false && parent.classList.contains('text_exposed_show') == false)) {
+                        parent.classList.add('_c_o_nvert_');
+                        parent.style.setProperty("font-family", "zawgyi-one", "important");
+                        if (font_verification_enable) {
+                            var parentElement = findParent(parent);
+                            if(isDuplicated(parentElement)===false){
+                                parentElement.classList.add("i_am_uni");
+                            }
+                        } else {
+                            addNoti();
+                        }
+                    }
+                }
             }
         }
     }
@@ -183,7 +203,11 @@ function findParent(element){
 }
 function isDuplicated(element){
     var parent = findParent(element);
-    return parent.className.indexOf('i_am_zawgyi')!==-1 ? true : false ;
+    if(convToUni){
+        return parent.className.indexOf('i_am_zawgyi')!==-1 ? true : false ;
+    } else {
+        return parent.className.indexOf('i_am_uni')!==-1 ? true : false ;
+    }
 }
 var addObserver = function() {
     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
@@ -220,7 +244,12 @@ function addNoti() {
     var id = 'mua-conversion-warning-container';
 
     if (!document.getElementById(id)) {
-        var text = "ဤစာမျက်နှာတွင် ရှိသော ဇော်ဂျီဖြင့် ရေးထားသည့် စာများအား အလိုအလျောက် ပြောင်းလဲထားပါသည်။";
+        var text = '';
+        if(convToUni){
+            var text = "ဤစာမျက်နှာတွင် ရှိသော ဇော်ဂျီဖြင့် ရေးထားသည့် စာများအား အလိုအလျောက် ပြောင်းလဲထားပါသည်။";
+        } else {
+            var text = "ဤစာမ်က္ႏွာတြင္ ရွိေသာ ယူနီကုဒ္ျဖင့္ ေရးထားသည့္ စာမ်ားအား အလိုအေလ်ာက္ ေျပာင္းလဲထားပါသည္။";
+        }
         var html = '<div class="mua-toast mua-toast-warning" style="display: block;"><div class="mua-toast-message">' + text + '</div></div>'
         var div = document.createElement('div');
         div.id = id;
