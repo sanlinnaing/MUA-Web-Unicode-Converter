@@ -12,7 +12,7 @@ function save(){
 }
 function getActiveFunction(){
 	chrome.storage.sync.get('unicode',function(a){
-		console.log(a.unicode);
+		// console.log(a.unicode);
 		if(a.unicode!==undefined){
 			if(a.unicode===true){
 				document.getElementById('unicode').classList.add('active');

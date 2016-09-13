@@ -109,7 +109,7 @@ function isZawgyi(input) {
 
 var convToUni = true;
 chrome.storage.sync.get('unicode',function(item){
-    console.log('convToUni',item.unicode);
+    // console.log('convToUni',item.unicode);
     if(item.unicode===false){
         convToUni = false;
     } else {
@@ -162,18 +162,10 @@ function convertTree(parent) {
                     }
                 }
                 if (shouldIgnoreNode(parent) == false && isZawgyi(text)===false && convToUni===false) {
-                    child.textContent = Uni_Z1(text);
+                    // console.log(parent,child);
                     if (parent.className == null || (parent.classList.contains('_c_o_nvert_') == false && parent.classList.contains('text_exposed_show') == false)) {
-                        parent.classList.add('_c_o_nvert_');
-                        parent.style.setProperty("font-family", "zawgyi-one", "important");
-                        if (font_verification_enable) {
-                            var parentElement = findParent(parent);
-                            if(isDuplicated(parentElement)===false){
-                                parentElement.classList.add("i_am_uni");
-                            }
-                        } else {
-                            addNoti();
-                        }
+                        parent.classList.add('_c_o_nvert_','i_am_uni');
+                        addNoti();                        
                     }
                 }
             }
@@ -203,11 +195,7 @@ function findParent(element){
 }
 function isDuplicated(element){
     var parent = findParent(element);
-    if(convToUni){
-        return parent.className.indexOf('i_am_zawgyi')!==-1 ? true : false ;
-    } else {
-        return parent.className.indexOf('i_am_uni')!==-1 ? true : false ;
-    }
+    return parent.className.indexOf('i_am_zawgyi')!==-1 ? true : false ;
 }
 var addObserver = function() {
     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
@@ -246,9 +234,9 @@ function addNoti() {
     if (!document.getElementById(id)) {
         var text = '';
         if(convToUni){
-            var text = "ဤစာမျက်နှာတွင် ရှိသော ဇော်ဂျီဖြင့် ရေးထားသည့် စာများအား အလိုအလျောက် ပြောင်းလဲထားပါသည်။";
+            text = "ဤစာမျက်နှာတွင် ရှိသော ဇော်ဂျီဖြင့် ရေးထားသည့် စာများအား အလိုအလျောက် ပြောင်းလဲထားပါသည်။";
         } else {
-            var text = "ဤစာမ်က္ႏွာတြင္ ရွိေသာ ယူနီကုဒ္ျဖင့္ ေရးထားသည့္ စာမ်ားအား အလိုအေလ်ာက္ ေျပာင္းလဲထားပါသည္။";
+            text = "ဤစာမ်က္ႏွာရွိ ယူနီကုဒ္ ျဖင့္ ေရးသားထားေသာစာမ်ားကို စံႏွင့္အညီ ေဖာ္ျပထားပါသည္။";
         }
         var html = '<div class="mua-toast mua-toast-warning" style="display: block;"><div class="mua-toast-message">' + text + '</div></div>'
         var div = document.createElement('div');
