@@ -4,16 +4,24 @@
     }
 }
 
-.i_am_zawgyi:hover {
+.i_am_zawgyi:hover{
     animation-name: changecolorhover;
     animation-duration: 1s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
-.i_am_zawgyi {
+.i_am_zawgyi{
     border-left: 4px solid #DDDFE2;
     padding-left: .6em;
+}
+
+@font-face {
+    font-family: 'YoeYar-One';
+    src: url('chrome-extension://__MSG_@@extension_id__/YoeYar-One.ttf') format('truetype');
+}
+.i_am_uni{
+    font-family: 'YoeYar-One';
 }
 /* CSS copied from https://github.com/CodeSeven/toastr */
 

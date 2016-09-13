@@ -107,8 +107,15 @@ function isZawgyi(input) {
     return false;
 }
 
-/*
- */
+var convToUni = true;
+chrome.storage.sync.get('unicode',function(item){
+    // console.log('convToUni',item.unicode);
+    if(item.unicode===false){
+        convToUni = false;
+    } else {
+        convToUni = true;
+    }
+});
 
 function shouldIgnoreNode(node) {
     if (node.nodeName == "INPUT" || node.nodeName == "SCRIPT" || node.nodeName == "TEXTAREA") {
@@ -139,7 +146,7 @@ function convertTree(parent) {
             var text = child.textContent.replace(/[\u200b\uFFFD]/g, "");
             if (text && isMyanmar(text)) {
                 //console.log(text);
-                if (shouldIgnoreNode(parent) == false && isZawgyi(text)) {
+                if (shouldIgnoreNode(parent) == false && isZawgyi(text) && convToUni) {
                     child.textContent = Z1_Uni(text);
                     if (parent.className == null || (parent.classList.contains('_c_o_nvert_') == false && parent.classList.contains('text_exposed_show') == false)) {
                         parent.classList.add('_c_o_nvert_');
@@ -154,8 +161,13 @@ function convertTree(parent) {
                         }
                     }
                 }
-
-
+                if (shouldIgnoreNode(parent) == false && isZawgyi(text)===false && convToUni===false) {
+                    // console.log(parent,child);
+                    if (parent.className == null || (parent.classList.contains('_c_o_nvert_') == false && parent.classList.contains('text_exposed_show') == false)) {
+                        parent.classList.add('_c_o_nvert_','i_am_uni');
+                        addNoti();                        
+                    }
+                }
             }
         }
     }
@@ -220,7 +232,12 @@ function addNoti() {
     var id = 'mua-conversion-warning-container';
 
     if (!document.getElementById(id)) {
-        var text = "ဤစာမျက်နှာတွင် ရှိသော ဇော်ဂျီဖြင့် ရေးထားသည့် စာများအား အလိုအလျောက် ပြောင်းလဲထားပါသည်။";
+        var text = '';
+        if(convToUni){
+            text = "ဤစာမျက်နှာတွင် ရှိသော ဇော်ဂျီဖြင့် ရေးထားသည့် စာများအား အလိုအလျောက် ပြောင်းလဲထားပါသည်။";
+        } else {
+            text = "ဤစာမ်က္ႏွာရွိ ယူနီကုဒ္ ျဖင့္ ေရးသားထားေသာစာမ်ားကို စံႏွင့္အညီ ေဖာ္ျပထားပါသည္။";
+        }
         var html = '<div class="mua-toast mua-toast-warning" style="display: block;"><div class="mua-toast-message">' + text + '</div></div>'
         var div = document.createElement('div');
         div.id = id;
