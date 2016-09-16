@@ -30,7 +30,8 @@
       "run_at": "document_idle"
    } ],
   "web_accessible_resources": [
-    "YoeYar-One.ttf"
+    "YoeYar-One.ttf",
+    "pyidaungsu-1-3.ttf"
   ],
   "permissions": [
     "activeTab", "storage"

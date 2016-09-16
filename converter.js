@@ -164,8 +164,12 @@ function convertTree(parent) {
                 if (shouldIgnoreNode(parent) == false && isZawgyi(text)===false && convToUni===false) {
                     // console.log(parent,child);
                     if (parent.className == null || (parent.classList.contains('_c_o_nvert_') == false && parent.classList.contains('text_exposed_show') == false)) {
-                        parent.classList.add('_c_o_nvert_','i_am_uni');
-                        addNoti();                        
+                        if(font_verification_enable){
+                            parent.classList.add('_c_o_nvert_','i_am_uni_verified');
+                        } else {
+                            parent.classList.add('_c_o_nvert_','i_am_uni');
+                            addNoti();                        
+                        }
                     }
                 }
             }

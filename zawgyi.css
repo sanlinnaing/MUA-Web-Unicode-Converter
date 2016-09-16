@@ -20,8 +20,15 @@
     font-family: 'YoeYar-One';
     src: url('chrome-extension://__MSG_@@extension_id__/YoeYar-One.ttf') format('truetype');
 }
+@font-face{
+    font-family: 'PyiDaungSu';
+    src:url('chrome-extension://__MSG_@@extension_id__/pyidaungsu-1-3.ttf') format('truetype');    
+}
 .i_am_uni{
-    font-family: 'YoeYar-One';
+    font-family: 'PyiDaungSu';
+}
+.i_am_uni_verified{
+    font-family: 'YoeYar-One'
 }
 /* CSS copied from https://github.com/CodeSeven/toastr */
 
