@@ -176,7 +176,8 @@ function Z1_Uni(input) {
 	// MUA Web Unicode Converter's work
 	//user typo error
 
-	output = output.replace(/(\u103A)(\u1037)/g, "$2$1");
+	//output = output.replace(/(\u103A)(\u1037)/g, "$2$1");
+
 	// For Latest Myanmar3
 	//console.log("text ="+output);
 	return output;
