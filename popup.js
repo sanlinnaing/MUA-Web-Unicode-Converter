@@ -118,21 +118,6 @@ function switchNow() {
             }
         };
 */
-        function copyimg(){
-          var copynow=new Clipboard('.btn');
-          copynow.on('success',function(e){
-            e.clearSelection();
-            var message=document.getElementById('message');
-            message.innerHTML="အောင်မြင်စွာကော်ပီကူးပြီးဖြစ်၍ နှစ်သက်ရာနေရာတွင် paste ချ၍အသုံးပြုနိုင်ပါသည်။";
-            function amk(){
-              setTimeout(function(){
-                message.innerHTML="";
-              },3000);
-            }
-            amk();
-            clearTimeout(amk());
-          });
-        }
         var text=document.getElementById('myTextarea');
         chrome.storage.sync.get("textboxval_mua",function(a){
             if(a.textboxval_mua!==undefined){
@@ -141,7 +126,7 @@ function switchNow() {
         });
         text.onkeypress=function(e){
           //console.log(text.value);
-          console.log(e.which);
+          // console.log(e.which);
           chrome.storage.sync.set({"textboxval_mua":text.value+String.fromCharCode(e.which)});
         };
         $fillText.onclick = function (e) {
@@ -161,7 +146,6 @@ function switchNow() {
             wrapText(ctx, text, x, y, maxWidth, lineHeight);
             $imgs.innerHTML = "";
             $imgs.appendChild(Canvas2Image.convertToImage(canvas, canvas.width, canvas.height, "png"));
-            copyimg();
             chrome.storage.sync.set({"textboxval_mua":""});
         }
 

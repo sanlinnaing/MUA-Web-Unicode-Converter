@@ -1,7 +1,35 @@
-.i_am_zawgyi:hover {
-    border-right: 2px solid #FD1100;
+@keyframes changecolorhover {
+    to {
+        border-left: 4px solid #FD1100;
+    }
 }
 
+.i_am_zawgyi:hover{
+    animation-name: changecolorhover;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+.i_am_zawgyi{
+    border-left: 4px solid #DDDFE2;
+    padding-left: .6em;
+}
+
+@font-face {
+    font-family: 'YoeYar-One';
+    src: url('chrome-extension://__MSG_@@extension_id__/YoeYar-One.ttf') format('truetype');
+}
+@font-face{
+    font-family: 'PyiDaungSu';
+    src:url('chrome-extension://__MSG_@@extension_id__/pyidaungsu-1-3.ttf') format('truetype');    
+}
+.i_am_uni{
+    font-family: 'PyiDaungSu';
+}
+.i_am_uni_verified{
+    font-family: 'YoeYar-One'
+}
 /* CSS copied from https://github.com/CodeSeven/toastr */
 
 #mua-conversion-warning-container {

@@ -107,8 +107,15 @@ function isZawgyi(input) {
     return false;
 }
 
-/*
- */
+var convToUni = true;
+chrome.storage.sync.get('unicode',function(item){
+    // console.log('convToUni',item.unicode);
+    if(item.unicode===false){
+        convToUni = false;
+    } else {
+        convToUni = true;
+    }
+});
 
 function shouldIgnoreNode(node) {
     if (node.nodeName == "INPUT" || node.nodeName == "SCRIPT" || node.nodeName == "TEXTAREA") {
@@ -127,7 +134,7 @@ function convertTree(parent) {
     if (parent instanceof Node == false || parent instanceof SVGElement) {
         return;
     }
-    if (parent.className != null && parent.className.indexOf('_c_o_nvert_') != -1) {
+    if (parent.className != null && parent.classList.contains('_c_o_nvert_') == true) {
         //console.log("converted return");
         return;
     }
@@ -136,28 +143,64 @@ function convertTree(parent) {
         if (child.nodeType != Node.TEXT_NODE && child.hasChildNodes()) {
             convertTree(child);
         } else if (child.nodeType == Node.TEXT_NODE) {
-            var text = child.textContent;
+            var text = child.textContent.replace(/[\u200b\uFFFD]/g, "");
             if (text && isMyanmar(text)) {
                 //console.log(text);
-                if (shouldIgnoreNode(parent) == false && isZawgyi(text)) {
+                if (shouldIgnoreNode(parent) == false && isZawgyi(text) && convToUni) {
                     child.textContent = Z1_Uni(text);
-                    if (parent.className == null || (parent.className.indexOf('_c_o_nvert_') == -1 && parent.className.indexOf('text_exposed_show') == -1)) {
-                        parent.className += ' _c_o_nvert_';
+                    if (parent.className == null || (parent.classList.contains('_c_o_nvert_') == false && parent.classList.contains('text_exposed_show') == false)) {
+                        parent.classList.add('_c_o_nvert_');
                         parent.style.setProperty("font-family", "lucida grande,tahoma,verdana,arial,sans-serif", "important");
                         if (font_verification_enable) {
-                            parent.className += " i_am_zawgyi";
+                            var parentElement = findParent(parent);
+                            if(isDuplicated(parentElement)===false){
+                                parentElement.classList.add("i_am_zawgyi");
+                            }
                         } else {
                             addNoti();
                         }
                     }
                 }
-
-
+                if (shouldIgnoreNode(parent) == false && isZawgyi(text)===false && convToUni===false) {
+                    // console.log(parent,child);
+                    if (parent.className == null || (parent.classList.contains('_c_o_nvert_') == false && parent.classList.contains('text_exposed_show') == false)) {
+                        if(font_verification_enable){
+                            parent.classList.add('_c_o_nvert_','i_am_uni_verified');
+                        } else {
+                            parent.classList.add('_c_o_nvert_','i_am_uni');
+                            addNoti();                        
+                        }
+                    }
+                }
             }
         }
     }
 }
-
+function findParent(element){
+    var parentElement = element.parentNode;
+    var end = false;
+    while(end === false){
+        if(parentElement.childNodes.length > 1) {
+            if(parentElement.lastChild.nodeName == 'DIV'){
+                end = true ;
+            } else {
+                parentElement = parentElement.parentNode; 
+            }            
+        } else {
+            end = true;
+        }
+    }
+    if(parentElement.nodeName == 'SPAN'){
+        parentElement.style.display = 'block';
+    } else if(parentElement.nodeName == 'A'){
+        parentElement.style.display = 'inline-block';
+    }
+    return parentElement;
+}
+function isDuplicated(element){
+    var parent = findParent(element);
+    return parent.className.indexOf('i_am_zawgyi')!==-1 ? true : false ;
+}
 var addObserver = function() {
     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
     var list = document.querySelector('body');
@@ -193,7 +236,12 @@ function addNoti() {
     var id = 'mua-conversion-warning-container';
 
     if (!document.getElementById(id)) {
-        var text = "ဤစာမျက်နှာတွင် ရှိသော ဇော်ဂျီဖြင့် ရေးထားသည့် စာများအား အလိုအလျောက် ပြောင်းလဲထားပါသည်။";
+        var text = '';
+        if(convToUni){
+            text = "ဤစာမျက်နှာတွင် ရှိသော ဇော်ဂျီဖြင့် ရေးထားသည့် စာများအား အလိုအလျောက် ပြောင်းလဲထားပါသည်။";
+        } else {
+            text = "ဤစာမ်က္ႏွာရွိ ယူနီကုဒ္ ျဖင့္ ေရးသားထားေသာစာမ်ားကို စံႏွင့္အညီ ေဖာ္ျပထားပါသည္။";
+        }
         var html = '<div class="mua-toast mua-toast-warning" style="display: block;"><div class="mua-toast-message">' + text + '</div></div>'
         var div = document.createElement('div');
         div.id = id;
@@ -243,28 +291,22 @@ if (isMyanmar(title) && isZawgyi(title)) {
     document.title = Z1_Uni(title);
 }
 
-if (document.location.hostname.indexOf("facebook") != -1) {
+if (document.location.hostname.indexOf("facebook") != -1 || document.location.hostname=='plus.google.com') {
     font_verification_enable = true;
     //console.log("It is facebook");
 }
 
 var list = document.querySelector('body');
 if (!list) {
-    if (document.addEventListener) {
-        // Use the handy event callback
-        document.addEventListener("DOMContentLoaded",
-            function() {
-                chrome.storage.sync.get("data", function(items) {
-                    if (!chrome.runtime.error) {
-                      //console.log(items);
-                      var enableMUA = items.data;
-                      if(enableMUA != "disable") {
-                        addObserver();
-                      }
-                    } 
-                });
-            }, false);
-    }
+    chrome.storage.sync.get("data", function(items) {
+        if (!chrome.runtime.error) {
+          //console.log(items);
+          var enableMUA = items.data;
+          if(enableMUA != "disable") {
+            addObserver();
+          }
+        } 
+    });
 } else {
     chrome.storage.sync.get("data", function(items) {
         if (!chrome.runtime.error) {
@@ -276,5 +318,4 @@ if (!list) {
           }
         } 
     });
-    
 }
