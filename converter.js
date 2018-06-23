@@ -296,18 +296,29 @@ if (document.location.hostname.indexOf("facebook") != -1 || document.location.ho
     //console.log("It is facebook");
 }
 
+//  checking this site is disabled me or not.
+var isDisableMUA = document.getElementById("disableMUA") ? true : false;
+console.log("MUA Conver is disabled by site was " + isDisableMUA);
+
 var list = document.querySelector('body');
-if (!list) {
-    chrome.storage.sync.get("data", function(items) {
-        if (!chrome.runtime.error) {
-          //console.log(items);
-          var enableMUA = items.data;
-          if(enableMUA != "disable") {
-            addObserver();
-          }
-        } 
-    });
-} else {
+
+if (!isDisableMUA && !list) {
+    if (document.addEventListener) {
+        // Use the handy event callback
+        document.addEventListener("DOMContentLoaded",
+            function() {
+                chrome.storage.sync.get("data", function(items) {
+                    if (!chrome.runtime.error) {
+                      //console.log(items);
+                      var enableMUA = items.data;
+                      if(enableMUA != "disable") {
+                        addObserver();
+                      }
+                    } 
+                });
+            }, false);
+    }
+} else if(!isDisableMUA) {
     chrome.storage.sync.get("data", function(items) {
         if (!chrome.runtime.error) {
           //console.log(items);
@@ -317,5 +328,5 @@ if (!list) {
             addObserver();
           }
         } 
-    });
+    });  
 }
