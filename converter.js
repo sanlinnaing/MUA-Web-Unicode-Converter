@@ -144,6 +144,7 @@ function convertTree(parent) {
             convertTree(child);
         } else if (child.nodeType == Node.TEXT_NODE) {
             var text = child.textContent.replace(/[\u200b\uFFFD]/g, "");
+            text = text.replace(/&#8203;/g, "");
             if (text && isMyanmar(text)) {
                 //console.log(text);
                 if (shouldIgnoreNode(parent) == false && isZawgyi(text) && convToUni) {
