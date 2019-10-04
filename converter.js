@@ -280,7 +280,7 @@ function addNoti() {
                     setOpacity(element, op);
                     op -= op * 0.1;
                 }, 50);
-            }, 5000);
+            }, 3000);
         }
 
         fadeInAndOut(div);
