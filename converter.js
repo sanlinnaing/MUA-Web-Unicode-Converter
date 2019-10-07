@@ -100,7 +100,8 @@ function isZawgyi(input) {
             //  console.log(textSplitted[j]);
             if (j != 0)
                 textSplitted[j] = " " + textSplitted[j];
-            if (Zawgyi.test(textSplitted[j]))
+                var index = (textSplitted[j].match(/[\u1000-\u1021]/i)) ? textSplitted[j].match(/[\u1000-\u1021]/i).index : 0;
+            if (Zawgyi.test(textSplitted[j].substring(index)))
                 return true;
         }
     }
