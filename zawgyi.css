@@ -30,6 +30,12 @@
 .i_am_uni_verified{
     font-family: 'YoeYar-One'
 }
+._c_o_nvert_{
+    letter-spacing: normal !important;
+}
+*, body, div, section, p, span, strong, table, tr, td, h1, h2 ,h3, h4, h5, h6, i, a {
+    letter-spacing: normal ;
+}
 /* CSS copied from https://github.com/CodeSeven/toastr */
 
 #mua-conversion-warning-container {
