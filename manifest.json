@@ -7,12 +7,12 @@
       "128": "icon128.png",
       "48": "icon48.png"
    },
-  "version": "1.17",
+  "version": "1.21",
 
   "background" : {
     "scripts" : ["background.js"]
   },
-  
+
   "options_page": "options.html",
 
   "browser_action": {
