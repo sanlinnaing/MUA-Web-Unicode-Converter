@@ -2,9 +2,9 @@
  *   These scripts are part of MUA Web Unicode Converter chrome extension
  *   It use Parabaik Converter developed by Ko Nwge Htun
  *   and Myanmar Font Tagger script developed by Ko Thant Thet Khin Zaw
- *   
  *
- *   
+ *
+ *
  */
 
 'use strict';
@@ -69,9 +69,9 @@ var zawgyiRegex = "\u1031\u103b" // e+medial ra
     + "|\u1039[\u107E-\u1084]";
 
 var Zawgyi = new RegExp(zawgyiRegex);
-/* Myanmar text checking regular expression 
+/* Myanmar text checking regular expression
  *  is the part of Myanmar Font Tagger
- * http://userscripts-mirror.org/scripts/review/103745 
+ * http://userscripts-mirror.org/scripts/review/103745
  */
 var Myanmar = new RegExp("[\u1000-\u1021]");
 
@@ -83,10 +83,10 @@ function isMyanmar(input) {
 }
 
 /*
- * This method will check and search Zawgyi Pattern with input text and 
+ * This method will check and search Zawgyi Pattern with input text and
  * return true, if the text is Zawgyi encoding.
  * Parm = input text
- * return = boolean 
+ * return = boolean
  *
  */
 
@@ -170,7 +170,7 @@ function convertTree(parent) {
                             parent.classList.add('_c_o_nvert_','i_am_uni_verified');
                         } else {
                             parent.classList.add('_c_o_nvert_','i_am_uni');
-                            addNoti();                        
+                            addNoti();
                         }
                     }
                 }
@@ -186,8 +186,8 @@ function findParent(element){
             if(parentElement.lastChild.nodeName == 'DIV'){
                 end = true ;
             } else {
-                parentElement = parentElement.parentNode; 
-            }            
+                parentElement = parentElement.parentNode;
+            }
         } else {
             end = true;
         }
@@ -203,12 +203,30 @@ function isDuplicated(element){
     var parent = findParent(element);
     return parent.className.indexOf('i_am_zawgyi')!==-1 ? true : false ;
 }
-var addObserver = function() {
+var addObserver = function(iFdoc) {
     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-    var list = document.querySelector('body');
+    var list;
+    if (iFdoc){
+      list = iFdoc.querySelector('body');
+    }else{
+      list = document.querySelector('body');
+    }
 
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
+          var frames = document.getElementsByTagName('IFRAME');
+          for(let frame of frames) {
+            var iFLoad = function (e) {
+              var doc = frame.contentDocument || frame.contentWindow.document;
+              if (doc)
+              {
+                addObserver(doc);
+              }
+              frame.removeEventListener('load', iFLoad);
+            }
+            frame.addEventListener('load', iFLoad);
+          }
+
             if (mutation.type == 'childList') {
                 for (var i = 0; i < mutation.addedNodes.length; i++) {
                     var node = mutation.addedNodes[i];
@@ -258,7 +276,7 @@ function addNoti() {
                 div.style.opacity = value;
                 div.style.filter = 'alpha(opacity=' + value * 100 + ")";
             }
-            
+
             var op = 0.01;
 
             setOpacity(element, op);
@@ -314,9 +332,11 @@ if (!isDisableMUA && !list) {
                       //console.log(items);
                       var enableMUA = items.data;
                       if(enableMUA != "disable") {
+
                         addObserver();
+
                       }
-                    } 
+                    }
                 });
             }, false);
     }
@@ -329,6 +349,6 @@ if (!isDisableMUA && !list) {
             convertTree(document.body);
             addObserver();
           }
-        } 
-    });  
+        }
+    });
 }
